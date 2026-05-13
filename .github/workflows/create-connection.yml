@@ -1,0 +1,48 @@
+name: Create Git Connection to Workspace
+
+on:
+    workflow_dispatch:
+      inputs:
+        workspace_name:
+            description: Fabric workspace name
+            required: true
+            type: string
+
+jobs:
+  create-git-connection:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      
+      - name: Install Az PowerShell Module
+        shell: pwsh
+        run: |
+          Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+          Install-Module -Name Az -Repository PSGallery -Force -AllowClobber
+
+      - name: Establish Connection to the Workspace
+        shell: pwsh
+        env:
+          TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          WORKSPACE_NAME: ${{ inputs.workspace_name }}
+          CONN_NAME: ${{ secrets.FABRIC_GIT_CONN_NAME }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        
+        run: |
+         $dateString = Get-Date -Format "yyyyMMddHHmmss"
+         $displayName = "demo-fabric-Git-Connector-$dateString"
+        
+          pwsh -File ./scripts/CreateConnection.ps1 `
+            -workspaceName $env:WORKSPACE_NAME `
+            -principalType "ServicePrincipal" `
+            -tenantId $env:TENANT_ID `
+            -subscriptionId $env:SUBSCRIPTION_ID `
+            -clientId $env:CLIENT_ID `
+            -servicePrincipalSecret $env:CLIENT_SECRET `
+            -key $env:PAT_TOKEN `
+            -displayName $displayName

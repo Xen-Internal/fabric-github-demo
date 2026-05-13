@@ -1,0 +1,125 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Copy_SourceLH_To_SinkLH",
+        "type": "Copy",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "LakehouseTableSource",
+            "datasetSettings": {
+              "annotations": [],
+              "connectionSettings": {
+                "name": "20bb99fb_8a4b_438f_b5d2_c954056f9a5b",
+                "properties": {
+                  "annotations": [],
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "workspaceId": "@pipeline().libraryVariables.WorkspaceID",
+                    "artifactId": "@pipeline().libraryVariables.Source_LakeHouseID",
+                    "rootFolder": "Tables"
+                  },
+                  "externalReferences": {
+                    "connection": "b0e2f921-c778-4f2d-a996-d3e3b7cd6bb4"
+                  }
+                }
+              },
+              "type": "LakehouseTable",
+              "schema": [],
+              "typeProperties": {
+                "schema": {
+                  "value": "@pipeline().libraryVariables.Schema",
+                  "type": "Expression"
+                },
+                "table": {
+                  "value": "@pipeline().libraryVariables.TableName",
+                  "type": "Expression"
+                }
+              }
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "Append",
+            "partitionOption": "None",
+            "applyVOrder": false,
+            "datasetSettings": {
+              "annotations": [],
+              "connectionSettings": {
+                "name": "3036a521_9fa8_470d_9a92_514d37b785c7",
+                "properties": {
+                  "annotations": [],
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "workspaceId": "@pipeline().libraryVariables.WorkspaceID",
+                    "artifactId": "@pipeline().libraryVariables.Sink_LakeHouseID",
+                    "rootFolder": "Tables"
+                  },
+                  "externalReferences": {
+                    "connection": "b0e2f921-c778-4f2d-a996-d3e3b7cd6bb4"
+                  }
+                }
+              },
+              "type": "LakehouseTable",
+              "schema": [],
+              "typeProperties": {
+                "schema": {
+                  "value": "@pipeline().libraryVariables.Schema",
+                  "type": "Expression"
+                },
+                "table": {
+                  "value": "@pipeline().libraryVariables.TableName",
+                  "type": "Expression"
+                }
+              }
+            }
+          },
+          "enableStaging": false,
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          }
+        }
+      }
+    ],
+    "libraryVariables": {
+      "WorkspaceID": {
+        "type": "String",
+        "variableName": "WorkspaceID",
+        "libraryName": "Sales_VariableLibrary"
+      },
+      "Source_LakeHouseID": {
+        "type": "String",
+        "variableName": "Source_LakeHouseID",
+        "libraryName": "Sales_VariableLibrary"
+      },
+      "Sink_LakeHouseID": {
+        "type": "String",
+        "variableName": "Sink_LakeHouseID",
+        "libraryName": "Sales_VariableLibrary"
+      },
+      "Schema": {
+        "type": "String",
+        "variableName": "Schema",
+        "libraryName": "Sales_VariableLibrary"
+      },
+      "TableName": {
+        "type": "String",
+        "variableName": "TableName",
+        "libraryName": "Sales_VariableLibrary"
+      }
+    }
+  }
+}

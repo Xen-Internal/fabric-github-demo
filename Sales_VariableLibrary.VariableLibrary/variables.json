@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/variables/1.0.0/schema.json",
+  "variables": [
+    {
+      "name": "WorkspaceID",
+      "note": "",
+      "type": "String",
+      "value": "4429eb60-032e-49a0-a7e3-0b28c4ee5eca"
+    },
+    {
+      "name": "Source_LakeHouseID",
+      "note": "",
+      "type": "String",
+      "value": "ef63f64d-1ae5-488b-8f4f-003071c35ce0"
+    },
+    {
+      "name": "Sink_LakeHouseID",
+      "note": "",
+      "type": "String",
+      "value": "93265225-4692-403a-b2d4-fb4c52c04b6b"
+    },
+    {
+      "name": "Schema",
+      "note": "",
+      "type": "String",
+      "value": "dbo"
+    },
+    {
+      "name": "TableName",
+      "note": "",
+      "type": "String",
+      "value": "Sales"
+    }
+  ]
+}
